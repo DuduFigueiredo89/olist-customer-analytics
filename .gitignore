@@ -1,0 +1,43 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# =========================
+# Dados
+# =========================
+
+# Bases brutas
+data/raw/*
+!data/raw/.gitkeep
+
+# Opcional: não versionar datasets processados grandes
+data/processed/*.csv
+data/processed/*.parquet
+
+# =========================
+# Modelos
+# =========================
+*.joblib
+*.pkl
+
+# Arquivos temporários
+*.tmp
+*.log
