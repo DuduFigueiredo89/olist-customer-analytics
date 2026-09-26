@@ -57,6 +57,8 @@ As principais bases utilizadas são:
 
 Para análises de comportamento, recompra e retenção foi utilizado o campo **`customer_unique_id`**, que permite identificar o mesmo cliente ao longo de diferentes pedidos.
 
+Os arquivos originais do dataset não são versionados neste repositório. Para reproduzir as análises, eles devem ser adicionados localmente ao diretório `data/raw/`.
+
 ---
 
 ## 🗂️ Estrutura do Projeto
@@ -70,7 +72,9 @@ olist-customer-analytics/
 │
 ├── data/
 │   ├── raw/
+│   │   └── .gitkeep
 │   └── processed/
+│       └── .gitkeep
 │
 ├── notebooks/
 │   ├── 01_data_quality.ipynb
@@ -81,7 +85,7 @@ olist-customer-analytics/
 │   └── 06_repurchase_prediction.ipynb
 │
 ├── models/
-│   └── repurchase_90d_pipeline.joblib
+│   └── .gitkeep
 │
 ├── reports/
 │   └── relatorio_executivo_olist_investidores.pdf
@@ -89,6 +93,10 @@ olist-customer-analytics/
 └── presentation/
     └── apresentacao_executiva_olist_investidores.pptx
 ```
+
+As pastas `data/raw/`, `data/processed/` e `models/` são mantidas no repositório por meio de arquivos `.gitkeep`.
+
+Os datasets e os artefatos serializados de Machine Learning, como arquivos `.joblib` e `.pkl`, não são versionados. Eles podem ser gerados ou armazenados localmente durante a execução das análises.
 
 ---
 
@@ -272,6 +280,8 @@ representando um lift de aproximadamente:
 
 O modelo pode, portanto, ser utilizado como mecanismo de **priorização de clientes para campanhas**, e não como uma previsão determinística de recompra.
 
+Os artefatos serializados eventualmente gerados durante o treinamento podem ser armazenados localmente no diretório `models/`. Esses arquivos não são versionados no repositório.
+
 ---
 
 # 📈 Principais Insights
@@ -326,7 +336,7 @@ Esse comportamento sugere oportunidades de:
 
 Os meios de pagamento apresentaram diferenças relativamente pequenas na taxa de recompra.
 
-Isso sugere que payment type isoladamente possui poder limitado para explicar a recorrência, mas pode contribuir quando combinado com:
+Isso sugere que o tipo de pagamento, isoladamente, possui poder limitado para explicar a recorrência, mas pode contribuir quando combinado com:
 
 - ticket;
 - parcelamento;
@@ -427,7 +437,9 @@ Aumentar essa conversão pode reduzir a dependência de aquisição contínua de
 - Pandas
 - NumPy
 - Matplotlib
+- Seaborn
 - Scikit-learn
+- Joblib
 - Jupyter Notebook
 - Git
 - GitHub
@@ -467,13 +479,15 @@ Instale as dependências:
 pip install -r requirements.txt
 ```
 
-Adicione os arquivos originais da Olist em:
+Adicione os arquivos originais do **Brazilian E-Commerce Public Dataset by Olist** em:
 
 ```text
 data/raw/
 ```
 
-Depois execute os notebooks na seguinte ordem:
+Os arquivos de dados não estão incluídos no repositório.
+
+Depois, execute os notebooks na seguinte ordem:
 
 ```text
 01_data_quality.ipynb
@@ -484,6 +498,30 @@ Depois execute os notebooks na seguinte ordem:
 06_repurchase_prediction.ipynb
 ```
 
+Essa sequência acompanha a evolução analítica do projeto:
+
+```text
+Qualidade dos dados
+        ↓
+Comportamento de pagamento
+        ↓
+Valor e segmentação dos clientes
+        ↓
+Recompra
+        ↓
+Retenção por coortes
+        ↓
+Predição de recompra
+```
+
+Os artefatos de Machine Learning eventualmente gerados pelo Notebook 06 podem ser armazenados localmente em:
+
+```text
+models/
+```
+
+Arquivos `.joblib` e `.pkl` são ignorados pelo Git e não são versionados.
+
 ---
 
 # 📁 Relatório e Apresentação Executiva
@@ -492,6 +530,10 @@ O projeto também possui materiais executivos consolidados:
 
 - [Relatório executivo](reports/relatorio_executivo_olist_investidores.pdf)
 - [Apresentação executiva](presentation/apresentacao_executiva_olist_investidores.pptx)
+
+O relatório consolida os principais resultados, implicações para o negócio e recomendações estratégicas.
+
+A apresentação executiva sintetiza a narrativa analítica e os principais insights para uma audiência orientada à tomada de decisão.
 
 ---
 
@@ -514,7 +556,9 @@ Além disso:
 - associação estatística não implica causalidade;
 - a janela de observação influencia métricas de recompra;
 - clientes adquiridos próximos ao final do dataset possuem menor tempo de acompanhamento;
-- o modelo de Machine Learning utiliza apenas informações disponíveis no dataset público.
+- o modelo de Machine Learning utiliza apenas informações disponíveis no dataset público;
+- o baixo percentual de recompra gera um problema de classificação desbalanceada e deve ser considerado na interpretação das métricas do modelo;
+- o modelo de propensão deve ser interpretado como ferramenta de priorização e ranking, e não como previsão determinística do comportamento individual.
 
 ---
 
@@ -543,3 +587,5 @@ permite identificar não apenas quanto os clientes compraram, mas também:
 - quando a recompra acontece;
 - quais comportamentos estão associados à recorrência;
 - quais clientes podem ser priorizados em futuras ações de retenção.
+
+A principal oportunidade encontrada está na conversão entre a **primeira e a segunda compra**, conectando análise de comportamento, segmentação e modelos preditivos a possíveis estratégias de CRM e crescimento orientado por dados.
